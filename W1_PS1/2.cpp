@@ -14,25 +14,31 @@ public:
         y = 0;
     }
 
-    void add(Complex z)
+    Complex &add(Complex z)
     {
         x += z.x;
         y += z.y;
+
+        return *this;
     }
 
-    void multiply(Complex z)
+    Complex &multiply(Complex z)
     {
         int real = x * z.x - y * z.y;
         int imaginary = x * z.y + y * z.x;
 
         x = real;
         y = imaginary;
+
+        return *this;
     }
 
-    void scale(int scalar)
+    Complex &scale(int scalar)
     {
         x *= scalar;
         y *= scalar;
+
+        return *this;
     }
 
     void print()
@@ -58,4 +64,10 @@ public:
 
 int main()
 {
+    Complex z1(3, 4);
+    Complex z2(1, 1);
+
+    Complex::add(z1, z2).print();
+    Complex::multiply(z1, z2).print();
+    z2.scale(2).print();
 }
