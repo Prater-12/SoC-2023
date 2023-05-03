@@ -45,7 +45,7 @@ int8_t isPrime(unsigned int n)
 
 unsigned int leastPrime_gt(unsigned int n)
 {
-    for (unsigned int x = n + 1; x < MAX_ITER; x++)
+    for (unsigned int x = n + 1; x < n + MAX_ITER; x++)
     {
         if (isPrime(x))
         {
