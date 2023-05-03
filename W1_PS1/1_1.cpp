@@ -4,26 +4,26 @@
 
 #define MAX_ITER 100000000
 
-int8_t isPrime(unsigned int n);
-unsigned int leastPrime_gt(unsigned int n);
+int8_t isPrime(unsigned long n);
+unsigned long leastPrime_gt(unsigned long n);
 unsigned long nthPrimeBasic(unsigned int n);
-const char *ordinalSuffix(int n);
+const char *ordinalSuffix(unsigned int n);
 
 int main()
 {
-    unsigned int possiblyPrime = 65;
-    unsigned int possiblyComposite = 541;
+    int possiblyPrime = 65;
+    int possiblyComposite = 541;
     std::cout << possiblyPrime << " is a " << (isPrime(possiblyPrime) ? "prime" : "composite") << " number." << std::endl;
     std::cout << possiblyComposite << " is a " << (isPrime(possiblyComposite) ? "prime" : "composite") << " number." << std::endl;
 
-    unsigned int n = 120;
+    int n = 120;
     std::cout << "The " << n << ordinalSuffix(n) << " prime is " << nthPrimeBasic(n) << "." << std::endl;
 
-    unsigned int m = 5000;
+    int m = 5000;
     std::cout << "The smallest prime greater than " << m << " is " << leastPrime_gt(m) << "." << std::endl;
 }
 
-int8_t isPrime(unsigned int n)
+int8_t isPrime(unsigned long n)
 {
     if (n <= 1)
         return 0;
@@ -43,7 +43,7 @@ int8_t isPrime(unsigned int n)
     return 1;
 }
 
-unsigned int leastPrime_gt(unsigned int n)
+unsigned long leastPrime_gt(unsigned long n)
 {
     for (unsigned int x = n + 1; x < n + MAX_ITER; x++)
     {
@@ -61,7 +61,7 @@ unsigned long nthPrimeBasic(unsigned int n)
     int i = 0;
     unsigned long ithPrime = 1;
 
-    for (int x = 0; x < MAX_ITER; x++)
+    for (unsigned long x = 1; x < MAX_ITER; x++)
     {
         if (isPrime(x))
         {
@@ -78,7 +78,7 @@ unsigned long nthPrimeBasic(unsigned int n)
     throw(std::runtime_error("Too many iterations, process aborted."));
 }
 
-const char *ordinalSuffix(int n)
+const char *ordinalSuffix(unsigned int n)
 {
     static const char suffixes[][3] = {"th", "st", "nd", "rd"};
     auto ord = n % 100;
