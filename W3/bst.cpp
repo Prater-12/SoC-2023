@@ -1,6 +1,9 @@
 #include <iostream>
 #include <stack>
 #include <vector>
+#include <cstdlib>
+
+#define N 20
 
 template <typename T>
 struct Node
@@ -120,24 +123,40 @@ public:
     };
 };
 
+void printVector(std::vector<int> *vec)
+{
+    for (std::vector<int>::iterator i = vec->begin(); i != vec->end(); ++i)
+        std::cout << *i << ' ';
+
+    std::cout << '\n';
+}
+
 int main()
 {
+    // srand(time(0));
+
     BinarySearchTree<int> bst;
 
-    for (int i = 0; i < 10; i++)
+    for (int i = 0; i < N; i++)
     {
-        bst.add(10 - i);
+        bst.add(N - i);
 
         if (i)
-            bst.add(10 + i);
+            bst.add(N + i);
 
         bst.inorder();
     }
 
-    std::vector<int> vec{7, 6, 5, 4, 3, 2, 1};
+    std::vector<int> vec;
+
+    for (int i = 0; i < N; ++i)
+    {
+        vec.push_back(rand() % 1000);
+    }
+
+    printVector(&vec);
 
     vec = BinarySearchTree<int>::sortVector(vec);
 
-    for (std::vector<int>::iterator i = vec.begin(); i != vec.end(); ++i)
-        std::cout << *i << ' ';
+    printVector(&vec);
 }

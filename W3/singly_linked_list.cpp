@@ -319,7 +319,7 @@ int main(void)
 
     std::cout << "Merging sorted lists\n";
     // Test merging sorted lists
-    int constexpr listSize = 5;
+    int constexpr listSize = 20;
 
     SinglyLinkedList<int> list;
     SinglyLinkedList<int> alsoList;

@@ -18,69 +18,6 @@ class DoublyLinkedList
     Node<T> *head;
     Node<T> *tail;
 
-    Node<T> *_mergeSort(Node<T> *head)
-    {
-
-        if (head == nullptr || head->next == nullptr)
-            return head;
-
-        Node<T> *toTail = head->next;
-        Node<T> *middle = head;
-
-        while (toTail != nullptr && toTail->next != nullptr)
-        {
-            toTail = toTail->next->next;
-            middle = middle->next;
-        }
-
-        Node<T> *ptr2 = _mergeSort(middle->next);
-        middle->next = nullptr;
-        Node<T> *ptr1 = _mergeSort(head);
-
-        Node<T> *newHead;
-        Node<T> *ptrNew = nullptr; // nullptr
-        Node<T> *ptrNew2;
-
-        while (ptr1 != nullptr && ptr2 != nullptr)
-        {
-
-            if (ptr1->data < ptr2->data)
-            {
-                ptrNew2 = ptr1;
-                ptr1 = ptr1->next;
-            }
-            else
-            {
-                ptrNew2 = ptr2;
-                ptr2 = ptr2->next;
-            }
-
-            if (ptrNew == nullptr)
-                newHead = ptrNew2;
-            else
-                ptrNew->next = ptrNew2;
-
-            ptrNew = ptrNew2;
-        }
-
-        if (ptr1 != nullptr)
-        {
-            if (ptrNew == nullptr)
-                newHead = ptr1;
-            else
-                ptrNew->next = ptr1;
-        }
-        else if (ptr2 != nullptr)
-        {
-            if (ptrNew == nullptr)
-                newHead = ptr2;
-            else
-                ptrNew->next = ptr2;
-        }
-
-        return newHead;
-    }
-
 public:
     DoublyLinkedList() : head(nullptr), tail(nullptr){};
 
@@ -120,7 +57,7 @@ public:
 
         if (tail == nullptr)
         {
-            head = newHead;
+            head = newTail;
         }
         else
         {
@@ -238,14 +175,6 @@ public:
         return -1;
     }
 
-    void mergeSort()
-    {
-        Node<T> *newHead = _mergeSort(head);
-        head = newHead;
-
-        return;
-    }
-
     static DoublyLinkedList *mergeSorted(DoublyLinkedList *list1, DoublyLinkedList *list2)
     {
         DoublyLinkedList<T> *newList = new DoublyLinkedList<T>;
@@ -270,9 +199,15 @@ public:
             }
 
             if (ptrNew == nullptr)
+            {
                 newList->head = ptrNew2;
+                newList->tail = ptrNew2;
+            }
             else
+            {
                 ptrNew->next = ptrNew2;
+                ptrNew2->prev = ptrNew;
+            }
 
             ptrNew = ptrNew2;
         }
@@ -283,9 +218,15 @@ public:
             ptr1 = ptr1->next;
 
             if (ptrNew == nullptr)
+            {
                 newList->head = ptrNew2;
+                newList->tail = ptrNew2;
+            }
             else
+            {
                 ptrNew->next = ptrNew2;
+                ptrNew2->prev = ptrNew;
+            }
 
             ptrNew = ptrNew2;
         }
@@ -296,9 +237,15 @@ public:
             ptr2 = ptr2->next;
 
             if (ptrNew == nullptr)
+            {
                 newList->head = ptrNew2;
+                newList->tail = ptrNew2;
+            }
             else
+            {
                 ptrNew->next = ptrNew2;
+                ptrNew2->prev = ptrNew;
+            }
 
             ptrNew = ptrNew2;
         }
@@ -312,7 +259,7 @@ int main(void)
 
     std::cout << "Merging sorted lists\n";
     // Test merging sorted lists
-    int constexpr listSize = 5;
+    int constexpr listSize = 20;
 
     DoublyLinkedList<int> list;
     DoublyLinkedList<int> alsoList;
@@ -329,19 +276,8 @@ int main(void)
     DoublyLinkedList<int> *mergedList = DoublyLinkedList<int>::mergeSorted(&list, &alsoList);
 
     mergedList->printAll();
+
+    std::cout << "Inserting 10 after 8: ";
     mergedList->insertAfter(8, 10);
     mergedList->printAll();
-
-    std::cout << "\nSorting list using merge-sort\n";
-    // Test merge-sort
-    DoublyLinkedList<int> unsortedList;
-
-    for (int i = 0; i < listSize; ++i)
-    {
-        unsortedList.prepend(rand() % 1000 + 1);
-    }
-
-    unsortedList.printAll();
-    unsortedList.mergeSort();
-    unsortedList.printAll();
 }
